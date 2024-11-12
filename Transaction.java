@@ -12,6 +12,13 @@ public class Transaction {
         this.amount = amount;
         this.date = new Date(); // Sets the current date and time
         this.user = user;
+    }
+    
+    public Transaction(String type, double amount, User user, User recipient) {
+        this.type = type;
+        this.amount = amount;
+        this.date = new Date(); // Sets the current date and time
+        this.user = user;
         this.recipient = recipient;
     }
 
