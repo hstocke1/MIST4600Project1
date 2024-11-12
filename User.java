@@ -38,4 +38,8 @@ public class User {
 		return encPass;
 	}
 	
+	public void changePassword(String newPass) {
+		encPass = Hash.sha256(newPass);
+	}
+	
 }
