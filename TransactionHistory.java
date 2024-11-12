@@ -11,6 +11,10 @@ public class TransactionHistory {
 		transactions.add(transaction);
 	}
 	
+	public ArrayList<Transaction> getAllTransactions() {
+		return transactions;
+	}
+	
 	public ArrayList<Transaction> getTransactionsForUser(User user) {
 		ArrayList<Transaction> userTransactions = new ArrayList<>();
 		for (Transaction transaction : transactions) {
