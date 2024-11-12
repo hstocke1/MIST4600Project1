@@ -14,13 +14,17 @@ public class AccountManager {
 			System.out.println("A user with the name: " + username + " already exists.");
 			return false;
 		} else {
-			User newUser;
+			
 			if (isAdmin) {
-	            newUser = new Admin(username, rawPass, fName, lName);
+				Admin newAdmin;
+				newAdmin = new Admin(username, rawPass, fName, lName, this);
+				users.put(username, newAdmin);
 	        } else {
+	        	User newUser;
 	            newUser = new User(username, rawPass, fName, lName);
+	            users.put(username, newUser);
 	        }
-			users.put(username, newUser);
+			
 			usernames.add(username);
 			return true;
 		}
