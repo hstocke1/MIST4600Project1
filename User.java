@@ -76,6 +76,7 @@ public class User {
     	addFunds(depositAmt);
     	Transaction thisTransaction = new Transaction("deposit", depositAmt, this);
     	transactionHistory.addTransaction(thisTransaction);
+    	accountManager.addTransaction(thisTransaction);
     	System.out.printf("%.2f deposited. Current balance is $%.2f%n", depositAmt, this.balance);
     }
     
@@ -87,6 +88,7 @@ public class User {
     	subFunds(withdrawlAmt);
     	Transaction thisTransaction = new Transaction("withdrawal", withdrawlAmt, this);
     	transactionHistory.addTransaction(thisTransaction);
+    	accountManager.addTransaction(thisTransaction);
 		System.out.printf("%.2f withdrawn. Current balance is $%.2f%n", withdrawlAmt, this.balance);
 
     }
