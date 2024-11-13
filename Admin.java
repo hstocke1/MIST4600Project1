@@ -2,7 +2,7 @@ import java.util.*;
 
 public class Admin extends User {
 	private AccountManager accountManager;
-	private TransactionHistory transactionHistory;
+//	private TransactionHistory transactionHistory;
 	
 	public Admin(String username, String rawPass, String firstName, String lastName, AccountManager accountManager, boolean isAdmin) {
 		super(username, rawPass, firstName, lastName, accountManager, isAdmin);
@@ -23,11 +23,11 @@ public class Admin extends User {
         }
     }
 	
-	public void printMyTransactions() {
-        for (Transaction transaction : transactionHistory.getAllTransactions()) {
-            System.out.println(transaction);
-        }
-	}
+//	public void printMyTransactions() {
+//        for (Transaction transaction : transactionHistory.getAllTransactions()) {
+//            System.out.println(transaction);
+//        }
+//	}
 	
 	@Override
 	public void printAllTransactions() {
