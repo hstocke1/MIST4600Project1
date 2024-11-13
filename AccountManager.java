@@ -18,11 +18,11 @@ public class AccountManager {
 		} else {
 			if (isAdmin) {
 				Admin newAdmin;
-				newAdmin = new Admin(username, rawPass, fName, lName, this);
+				newAdmin = new Admin(username, rawPass, fName, lName, this, true);
 				users.put(username, newAdmin);
 	        } else {
 	        	User newUser;
-	            newUser = new User(username, rawPass, fName, lName, this);
+	            newUser = new User(username, rawPass, fName, lName, this, false);
 	            users.put(username, newUser);
 	        }
 			usernames.add(username);
