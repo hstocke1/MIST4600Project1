@@ -119,7 +119,7 @@ public class LoginManager {
 			break;
 			
 			default:
-			
+			System.out.println("invalid input. please enter a number (1-3)");
 			break;
 		
 
