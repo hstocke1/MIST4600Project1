@@ -81,14 +81,13 @@ public class LoginManager {
 						case 2:
 							System.out.println("How much would you like to deposit?");
 							double depositAmt = input.nextDouble();
-							activeUser.addFunds(depositAmt);
+							activeUser.depositFunds(depositAmt);
 							System.out.printf("%.2f deposited. Current balance is $%.2f%n", depositAmt, activeUser.getBalance());
 							break;
 						case 3:
 							System.out.println("How much would you like to withdrawl?");
 							double withdrawlAmt = input.nextDouble();
-							activeUser.subFunds(withdrawlAmt);
-							System.out.printf("%.2f withdrawn. Current balance is $%.2f%n", withdrawlAmt, activeUser.getBalance());
+							activeUser.withdrawlFunds(withdrawlAmt);
 							break;
 						case 4:
 							System.out.println("Enter the username of the individual whom you would like to transfer funds to");
@@ -96,8 +95,9 @@ public class LoginManager {
 							String recipient = input.nextLine();
 							System.out.println("How much would you like to send them?");
 							double transferAmt = input.nextDouble();
+							
 							activeUser.transferFunds(transferAmt, accManager.getUser(recipient));
-							System.out.printf("%.2f transferred to user %s. Current balance is $%.2f%n", transferAmt, recipient, activeUser.getBalance());
+							//System.out.printf("%.2f transferred to user %s. Current balance is $%.2f%n", transferAmt, recipient, activeUser.getBalance());
 							//we use formatted text (printf) to do all this rounding
 							break;
 						case 5:
@@ -119,7 +119,7 @@ public class LoginManager {
 			break;
 			
 			default:
-			System.out.println("invalid input. please enter a number (1-3)");
+				System.out.println("Invalid input. please enter a number (1-3)");
 			break;
 		
 
