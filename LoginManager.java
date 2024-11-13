@@ -61,7 +61,7 @@ public class LoginManager {
 		case 2:
 			System.out.print("Please enter a username: ");
 			String loginUn = input.nextLine();
-			System.out.print("Please enter a password:");
+			System.out.print("Please enter a password: ");
 			String loginPw = input.nextLine();
 			activeUser = accManager.logIn(loginUn, loginPw);
 			if (accManager.logIn(loginUn, loginPw) != null) {
@@ -72,7 +72,13 @@ public class LoginManager {
 					System.out.println("2: Deposit funds");
 					System.out.println("3: Withdrawl funds");
 					System.out.println("4: Transfer funds");
-					System.out.println("5: Log out");
+					System.out.println("5: Show my transaction history");
+					if(activeUser.isAdmin) {
+						System.out.println("6: List users and respective balances");
+						System.out.println("7: Change user password");
+						System.out.println("8: Show all transaction history");
+					}
+					System.out.println("9: Log out");
 					int loginChoice = input.nextInt();
 					switch(loginChoice) {
 						case 1:
@@ -82,7 +88,6 @@ public class LoginManager {
 							System.out.println("How much would you like to deposit?");
 							double depositAmt = input.nextDouble();
 							activeUser.depositFunds(depositAmt);
-							System.out.printf("%.2f deposited. Current balance is $%.2f%n", depositAmt, activeUser.getBalance());
 							break;
 						case 3:
 							System.out.println("How much would you like to withdrawl?");
@@ -101,14 +106,33 @@ public class LoginManager {
 							//we use formatted text (printf) to do all this rounding
 							break;
 						case 5:
+							activeUser.printMyTransactions();
+							break;
+						case 6:
+							activeUser.printUsers();
+							break;
+						case 7:
+							System.out.println("Enter the username of the user whos password you would like to change");
+							input.nextLine();
+							String username = input.nextLine();
+							System.out.println(username);
+							
+							System.out.println("Enter the new password");
+							String pass = input.nextLine();
+							activeUser.changePassword(accManager.getUser(username), pass);
+							break;
+						case 8:
+							activeUser.printAllTransactions();
+							break;
+						case 9:
 							activeUser = null;
 							keepGoing = false;
 							break;
 					}
-				}
-			} else {
-				System.out.println();
-			}
+				}}
+//			} else if (accManager.logIn(loginUn, loginPw) != null && activeUser.isAdmin) {
+//				System.out.println("Admin has logged in and this part has not been expanded on.");
+//			}
 			
 			break;
 			
