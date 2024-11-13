@@ -101,7 +101,7 @@ public class LoginManager {
 							//we use formatted text (printf) to do all this rounding
 							break;
 						case 5:
-							
+							activeUser = null;
 							keepGoing = false;
 							break;
 					
