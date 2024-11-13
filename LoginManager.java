@@ -42,7 +42,7 @@ public class LoginManager {
 			if(accManager.getUser(un) != null)  {
 				System.out.println("This user already exists.");
 			} else {
-				System.out.println("Please enter a password:");
+				System.out.print("Please enter a password: ");
 				String pw = input.nextLine();
 				System.out.print("Please your first name: ");
 				String fName = input.nextLine();
@@ -61,7 +61,7 @@ public class LoginManager {
 		case 2:
 			System.out.print("Please enter a username: ");
 			String loginUn = input.nextLine();
-			System.out.println("Please enter a password:");
+			System.out.print("Please enter a password:");
 			String loginPw = input.nextLine();
 			activeUser = accManager.logIn(loginUn, loginPw);
 			if (accManager.logIn(loginUn, loginPw) != null) {
@@ -121,8 +121,6 @@ public class LoginManager {
 			default:
 				System.out.println("Invalid input. please enter a number (1-3)");
 			break;
-		
-
 		
 		}
         
