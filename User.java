@@ -45,6 +45,10 @@ public class User {
 		encPass = Hash.sha256(newPass);
 	}
 	
+	public void changePassword(User user, String newPass) {
+		System.out.println("Access denied. Only admins can change other users' passwords.");
+	}
+	
     public void printUsers() {//standard users cannot print all users
         System.out.println("Access denied. Only admins can view users.");
     }
@@ -72,6 +76,7 @@ public class User {
     	addFunds(depositAmt);
     	Transaction thisTransaction = new Transaction("deposit", depositAmt, this);
     	transactionHistory.addTransaction(thisTransaction);
+    	System.out.printf("%.2f deposited. Current balance is $%.2f%n", depositAmt, this.balance);
     }
     
     public void withdrawlFunds(double withdrawlAmt) {
@@ -80,7 +85,7 @@ public class User {
     		return;
     	} 
     	subFunds(withdrawlAmt);
-    	Transaction thisTransaction = new Transaction("withdrawl", withdrawlAmt, this);
+    	Transaction thisTransaction = new Transaction("withdrawal", withdrawlAmt, this);
     	transactionHistory.addTransaction(thisTransaction);
 		System.out.printf("%.2f withdrawn. Current balance is $%.2f%n", withdrawlAmt, this.balance);
 
