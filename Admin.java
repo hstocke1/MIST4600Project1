@@ -13,13 +13,14 @@ public class Admin extends User {
 		return new ArrayList<>(accountManager.users.values());
     }
 
-	public boolean changePassword(User user, String newPass) {
-		if (user != null) {
-			user.changePassword(newPass);
-			return true;
-		}
-		return false;
-	}
+    public void changePassword(User user, String newPassword) {
+        if (user != null) {
+        	user.changePassword(newPassword);
+            System.out.println("Password changed successfully for user: " + user.getUsername());
+        } else {
+            System.out.println("User not found.");
+        }
+    }
 	
 	public void printMyTransactions() {
         for (Transaction transaction : transactionHistory.getAllTransactions()) {
@@ -39,7 +40,7 @@ public class Admin extends User {
 	public void printUsers() {
 	    ArrayList<User> users = getUsers();
 	    for (User aUser : users) {
-	        System.out.println("Username: " + aUser.getUsername() + ", Name: " + aUser.getName());
+	        System.out.println("Username: " + aUser.getUsername() + ", Name: " + aUser.getName() + " Balance: " + aUser.getBalance());
 	    }
 	}
 }
