@@ -1,134 +1,108 @@
-import java.util.*;
+//import java.util.ArrayList;
 
-public class LoginManager {
-
-    public static void main(String[] args) {
-        AccountManager accManager = new AccountManager();
-        boolean done = false;
-        Scanner input = new Scanner(System.in);
-        User activeUser;
-
-        accManager.createAccount("admin", "password", "Admin", null, true);
-        accManager.createAccount("odonnelly", "myPass", "Owen", "Donnelly", false);
-        accManager.createAccount("hstocke", "hisPass", "Hank", "Stocke", false);
-        accManager.createAccount("lhelm", "pass", "Levon", "Helm", false);
-        accManager.createAccount("rmanuel", "pass", "Richard", "Manuel", false);
-        accManager.createAccount("gbrooks", "pass", "Garth", "Brooks", false);
-
-        //activeUser = accManager.logIn("odonnelly", "myPass"); //log into odonnelly
-        //activeUser.transferFunds(50, accManager.getUser("hstocke")); //transfer 50 from the active user to hstocke
-
-		System.out.println("Welcome to Java Project Bank Account");
-		System.out.println("What would you like to do today?");
-        
-		while(!done) {
-
-
-		System.out.println("1: Create an account");
-		System.out.println("2: Login into your account");
-		System.out.println("3: Exit the program");
-		
-		System.out.println("Please enter your choice (1-3)");
-		int option = input.nextInt();
-		
-		input.nextLine();
-		
-		switch(option) {
-		
-		case 1:
-			System.out.print("Please enter a username: ");
-			String un = input.nextLine();
-			
-			if(accManager.getUser(un) != null)  {
-				System.out.println("This user already exists.");
-			} else {
-				System.out.print("Please enter a password: ");
-				String pw = input.nextLine();
-				System.out.print("Please your first name: ");
-				String fName = input.nextLine();
-				System.out.print("Please enter your last name: ");
-				String lName = input.nextLine();
-				accManager.createAccount(un, pw, fName, lName, false);
-				System.out.println("Thanks, " + fName + " " + lName + ". Your account has been created with the username " + un);
-			}
-			
-			System.out.println("\n----------------------");
-
-			
-			break;
-			
-			
-		case 2:
-			System.out.print("Please enter a username: ");
-			String loginUn = input.nextLine();
-			System.out.print("Please enter a password:");
-			String loginPw = input.nextLine();
-			activeUser = accManager.logIn(loginUn, loginPw);
-			if (accManager.logIn(loginUn, loginPw) != null) {
-				System.out.println("Welcome " + activeUser.getName());
-				boolean keepGoing = true;
-				while(keepGoing) {
-					System.out.println("1: Check balance");
-					System.out.println("2: Deposit funds");
-					System.out.println("3: Withdrawl funds");
-					System.out.println("4: Transfer funds");
-					System.out.println("5: Log out");
-					int loginChoice = input.nextInt();
-					switch(loginChoice) {
-						case 1:
-							System.out.printf("Current balance: $%.2f%n", activeUser.getBalance());
-							break;
-						case 2:
-							System.out.println("How much would you like to deposit?");
-							double depositAmt = input.nextDouble();
-							activeUser.depositFunds(depositAmt);
-							System.out.printf("%.2f deposited. Current balance is $%.2f%n", depositAmt, activeUser.getBalance());
-							break;
-						case 3:
-							System.out.println("How much would you like to withdrawl?");
-							double withdrawlAmt = input.nextDouble();
-							activeUser.withdrawlFunds(withdrawlAmt);
-							break;
-						case 4:
-							System.out.println("Enter the username of the individual whom you would like to transfer funds to");
-							input.nextLine();
-							String recipient = input.nextLine();
-							System.out.println("How much would you like to send them?");
-							double transferAmt = input.nextDouble();
-							
-							activeUser.transferFunds(transferAmt, accManager.getUser(recipient));
-							//System.out.printf("%.2f transferred to user %s. Current balance is $%.2f%n", transferAmt, recipient, activeUser.getBalance());
-							//we use formatted text (printf) to do all this rounding
-							break;
-						case 5:
-							activeUser = null;
-							keepGoing = false;
-							break;
-					}
-				}
-			} else {
-				System.out.println();
-			}
-			
-			break;
-			
-		case 3:
-			done = true;
-			System.out.println("Thank you for using the system.");
-			
-			break;
-			
-			default:
-				System.out.println("Invalid input. please enter a number (1-3)");
-			break;
-		
-		}
-        
-        
-        
-        
-        
-		}
-		input.close();
+public class User {
+	private String username;
+	private String encPass;
+	private String firstName;
+	private String lastName;
+	private double balance;
+	public boolean isAdmin;
+	private TransactionHistory transactionHistory; //track each users transaction history
+	private AccountManager accountManager;
+	
+	public User(String username, String rawPass, String firstName, String lastName, AccountManager accountManager, boolean isAdmin) {
+		this.username = username;
+		this.firstName = firstName;
+		this.lastName = lastName;
+		encPass = Hash.sha256(rawPass);
+		balance = 100;
+		transactionHistory = new TransactionHistory();
+		this.accountManager = accountManager;
+		this.isAdmin = isAdmin;
+	}
+	
+	public String getUsername() {
+		return username;
+	}
+	
+	public String getName() {
+		return lastName + ", " + firstName;
+	}
+	
+	public double getBalance() {
+		return balance;
+	}
+	
+	public String getEncPass() {
+		return encPass;
+	}
+	
+	public boolean getAdminStatus() {
+		return isAdmin;
+	}
+	
+	public void changePassword(String newPass) {
+		encPass = Hash.sha256(newPass);
+	}
+	
+    public void printUsers() {//standard users cannot print all users
+        System.out.println("Access denied. Only admins can view users.");
     }
+    
+	public void printAllTransactions() {//standard users cannot view others transactions
+		System.out.println("Access denied. Only admins can view full transaction history.");
+	}
+	
+	public void printMyTransactions() {
+        for (Transaction transaction : transactionHistory.getAllTransactions()) {
+            System.out.println(transaction);
+        }
+	}
+    
+    public void addFunds(double change) {
+    	balance += change;
+    }
+    
+    public void subFunds(double change) {
+    	balance -= change;
+    	
+    }
+    
+    public void depositFunds(double depositAmt) {
+    	addFunds(depositAmt);
+    	Transaction thisTransaction = new Transaction("deposit", depositAmt, this);
+    	transactionHistory.addTransaction(thisTransaction);
+    }
+    
+    public void withdrawlFunds(double withdrawlAmt) {
+    	if(withdrawlAmt > this.balance) {
+    		System.out.println("You do not have enough funds to perform this withdrawl.");
+    		return;
+    	} 
+    	subFunds(withdrawlAmt);
+    	Transaction thisTransaction = new Transaction("withdrawl", withdrawlAmt, this);
+    	transactionHistory.addTransaction(thisTransaction);
+		System.out.printf("%.2f withdrawn. Current balance is $%.2f%n", withdrawlAmt, this.balance);
+
+    }
+    
+    public void transferFunds(double amount, User recipient) {
+    	Transaction thisTransaction = new Transaction("transfer", amount, this, recipient); //create a transaction object for the transfer
+    	if (recipient == this) {
+    		System.out.println("You fuck! You can't send yourself money.");
+    	} else if (recipient.isAdmin) {
+    		System.out.println("Why the hell are you trying to send money to the man. Send it to a comrade instead!");
+    	}
+    	else if(amount > 0 && this.balance >= amount && recipient != null) { //check the sender can afford it, and that the recipient exists
+    		this.subFunds(amount);
+    		recipient.addFunds(amount);
+    		transactionHistory.addTransaction(thisTransaction); //add transaction to senders history
+    		recipient.transactionHistory.addTransaction(thisTransaction); //add transaction to recipients history
+    		accountManager.addTransaction(thisTransaction); //add transaction to master history
+    		System.out.printf("$%.2f transferred to user %s. Current balance is $%.2f%n", amount, recipient.getUsername(), this.balance);
+    	} else {
+    		System.out.println("Transfer failed. Insufficient funds, invalid amount, or invalid user");
+    	}
+    }
+    
 }
