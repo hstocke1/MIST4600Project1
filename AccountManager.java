@@ -35,7 +35,7 @@ public class AccountManager {
 		String encPass = Hash.sha256(rawPass);
 		
 		if (user != null && user.getEncPass().equals(encPass)) {
-		System.out.println("Login successful!");
+		//System.out.println("Login successful!");
 		return user; //login worked
 		
 		}
@@ -54,4 +54,6 @@ public class AccountManager {
 	public ArrayList<Transaction> getAllTransactions() {
         return transactionHistory.getAllTransactions();
     }
+
+	
 }
