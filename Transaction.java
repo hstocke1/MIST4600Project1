@@ -23,27 +23,21 @@ public class Transaction {
     }
 
     public String toString() {
-    String pastTensed;
     switch (type) {
         case "deposit":
-            pastTensed = "deposited";
-            break;
+        	return user.getUsername() + " deposited $" + amount + " on " + date;
         case "withdrawal":
-            pastTensed = "withdrew";
-            break;
+        	return user.getUsername() + " withdrew $" + amount + " on " + date;
         case "transfer":
             if (recipient != null) {
-                pastTensed = "transferred to " + recipient.getUsername();
+                return user.getUsername() + " transferred $" + amount + " to " + recipient.getUsername() + " on " + date;
             } else {
-                pastTensed = "transferred to unknown";
+            	return user.getUsername() + " transferred $" + amount + " to unknown on " + date;
             }
-            break;
         default:
-            pastTensed = "performed";
-            break;
+        	return "unknown transaction type";
     }
-    return user.getUsername() + " " + pastTensed + " " + amount + " on " + date;
-}
+    }
 
     
     public String getType() {
