@@ -5,7 +5,7 @@ public class User {
 	private String encPass;
 	private String firstName;
 	private String lastName;
-	private double balance;
+	protected double balance;
 	public boolean isAdmin;
 	private TransactionHistory transactionHistory; //track each users transaction history
 	private AccountManager accountManager;
