@@ -87,22 +87,32 @@ public class User {
     }
     
     public void transferFunds(double amount, User recipient) {
-    	Transaction thisTransaction = new Transaction("transfer", amount, this, recipient); //create a transaction object for the transfer
-    	if (recipient == this) {
-    		System.out.println("You fuck! You can't send yourself money.");
-    	} else if (recipient.isAdmin) {
-    		System.out.println("Why the hell are you trying to send money to the man. Send it to a comrade instead!");
-    	}
-    	else if(amount > 0 && this.balance >= amount && recipient != null) { //check the sender can afford it, and that the recipient exists
-    		this.subFunds(amount);
-    		recipient.addFunds(amount);
-    		transactionHistory.addTransaction(thisTransaction); //add transaction to senders history
-    		recipient.transactionHistory.addTransaction(thisTransaction); //add transaction to recipients history
-    		accountManager.addTransaction(thisTransaction); //add transaction to master history
-    		System.out.printf("$%.2f transferred to user %s. Current balance is $%.2f%n", amount, recipient.getUsername(), this.balance);
-    	} else {
-    		System.out.println("Transfer failed. Insufficient funds, invalid amount, or invalid user");
-    	}
+        if (recipient == null) {
+            System.out.println("Transfer failed. Invalid user.");
+            return;
+        }
+
+        if (recipient == this) {
+            System.out.println("You can't send money to yourself.");
+            return;
+        }
+
+        if (recipient.isAdmin) {
+            System.out.println("Can't send money to an admin account.");
+            return;
+        }
+
+        if (amount > 0 && this.balance >= amount) {
+            Transaction thisTransaction = new Transaction("transfer", amount, this, recipient);
+            this.subFunds(amount);
+            recipient.addFunds(amount);
+            transactionHistory.addTransaction(thisTransaction);
+            recipient.transactionHistory.addTransaction(thisTransaction);
+            accountManager.addTransaction(thisTransaction);
+            System.out.printf("$%.2f transferred to user %s. Current balance is $%.2f%n", amount, recipient.getUsername(), this.balance);
+        } else {
+            System.out.println("Transfer failed. Insufficient funds or invalid amount.");
+        }
     }
     
 }
