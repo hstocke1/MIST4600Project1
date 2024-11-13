@@ -89,7 +89,10 @@ public class User {
     
     public void transferFunds(double amount, User recipient) {
     	Transaction thisTransaction = new Transaction("transfer", amount, this, recipient); //create a transaction object for the transfer
-    	if(amount > 0 && this.balance >= amount && recipient != null) { //check the sender can afford it, and that the recipient exists
+    	if (recipient == this) {
+    		System.out.println("You fuck! You can't send yourself money.");
+    	}
+    	else if(amount > 0 && this.balance >= amount && recipient != null) { //check the sender can afford it, and that the recipient exists
     		this.subFunds(amount);
     		recipient.addFunds(amount);
     		transactionHistory.addTransaction(thisTransaction); //add transaction to senders history
