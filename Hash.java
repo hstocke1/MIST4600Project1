@@ -9,11 +9,10 @@ public class Hash {
             
             //create an array using the getBytes function.
             byte[] undoneBytes = text.getBytes();
-            //print the length of the array. Each byte is 8 bits (1/0), but
-            System.out.println(undoneBytes.length);
+            //print the length of the array. Each byte is 8 bits (1/0)
+            //System.out.println(undoneBytes.length);
             for (int i = 0; i<undoneBytes.length; i++) {
-            	
-            	System.out.println("Prehashed Hexadecimal Value " + i + ": " + undoneBytes[i]);
+            	//System.out.println("Prehashed Hexadecimal Value " + i + ": " + undoneBytes[i]);
             }
             
             // Convert the input string into a byte array and compute the hash
@@ -27,18 +26,18 @@ public class Hash {
             for (int i = 0; i < hash.length; i++) {
             	// Convert the byte to a two-digit hex value
             	String hex = Integer.toHexString(0xff & hash[i]);
-            	System.out.println("Byte value: " + hash[i] + " converted to string value: " + hex);
+            	//System.out.println("Byte value: " + hash[i] + " converted to string value: " + hex);
             	
             	
                 // Ensure each hex value is two digits by adding a leading zero if necessary
                 if (hex.length() == 1) {
                 	hexString.append('0');
-                	System.out.println("Added leading 0 to hexString object");
+                	//System.out.println("Added leading 0 to hexString object");
                 	}
                 
                 // Append the hex value to the StringBuilder
                 hexString.append(hex);
-                System.out.println(hexString.toString());
+                //System.out.println(hexString.toString());
             }
             
             // Return the complete hex string
