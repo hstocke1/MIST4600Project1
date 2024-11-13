@@ -86,11 +86,12 @@ public class User {
 
     }
     
-    
     public void transferFunds(double amount, User recipient) {
     	Transaction thisTransaction = new Transaction("transfer", amount, this, recipient); //create a transaction object for the transfer
     	if (recipient == this) {
     		System.out.println("You fuck! You can't send yourself money.");
+    	} else if (recipient.isAdmin) {
+    		System.out.println("Why the hell are you trying to send money to the man. Send it to a comrade instead!");
     	}
     	else if(amount > 0 && this.balance >= amount && recipient != null) { //check the sender can afford it, and that the recipient exists
     		this.subFunds(amount);
