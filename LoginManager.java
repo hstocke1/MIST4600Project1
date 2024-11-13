@@ -82,12 +82,12 @@ public class LoginManager {
 							System.out.println("How much would you like to deposit?");
 							double depositAmt = input.nextDouble();
 							activeUser.addFunds(depositAmt);
-							System.out.printf("%.2f deposited. Current balance is $%.2f", depositAmt, activeUser.getBalance());
+							System.out.printf("%.2f deposited. Current balance is $%.2f%n", depositAmt, activeUser.getBalance());
 							break;
 						case 3:
 							System.out.println("How much would you like to withdrawl?");
 							double withdrawlAmt = input.nextDouble();
-							activeUser.addFunds(withdrawlAmt);
+							activeUser.subFunds(withdrawlAmt);
 							System.out.printf("%.2f withdrawn. Current balance is $%.2f%n", withdrawlAmt, activeUser.getBalance());
 							break;
 						case 4:
@@ -104,9 +104,10 @@ public class LoginManager {
 							activeUser = null;
 							keepGoing = false;
 							break;
-					
 					}
 				}
+			} else {
+				System.out.println();
 			}
 			
 			break;
