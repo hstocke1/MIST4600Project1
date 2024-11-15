@@ -1,4 +1,5 @@
 import java.util.Scanner;
+import java.util.InputMismatchException;
 
 public class UserInterface {
     private AccountManager accManager;
@@ -10,20 +11,18 @@ public class UserInterface {
         this.input = new Scanner(System.in);
         
     }
-
+    
 	public void start() {
 		System.out.println("Welcome to Java Project Bank Account");
 		System.out.println("What would you like to do today?");
         boolean done = false;
 		while(!done) {
-
 		System.out.println("1: Create an account");
 		System.out.println("2: Login into your account");
 		System.out.println("3: Exit the program");
-		
 		System.out.println("Please enter your choice (1-3)");
-		int option = input.nextInt();
 		
+		int option = getValidInput(1,3);
 		input.nextLine();
 		
 		switch(option) {
@@ -44,20 +43,15 @@ public class UserInterface {
 				accManager.createAccount(un, pw, fName, lName, false);
 				System.out.println("Thanks, " + fName + " " + lName + ". Your account has been created with the username " + un);
 			}
-			
 			System.out.println("\n----------------------");
-
-			
 			break;
-			
-			
 		case 2:
 			System.out.print("Please enter a username: ");
 			String loginUn = input.nextLine();
 			System.out.print("Please enter a password: ");
 			String loginPw = input.nextLine();
-			activeUser = accManager.logIn(loginUn, loginPw);
 			if (accManager.logIn(loginUn, loginPw) != null) {
+				activeUser = accManager.logIn(loginUn, loginPw);
 				System.out.println("Welcome " + activeUser.getName());
 				boolean keepGoing = true;
 				while(keepGoing) {
@@ -72,7 +66,7 @@ public class UserInterface {
 						System.out.println("8: Show all transaction history");
 					}
 					System.out.println("9: Log out");
-					int loginChoice = input.nextInt();
+					int loginChoice = getValidInput(1,9);
 					switch(loginChoice) {
 						case 1:
 							System.out.printf("Current balance: $%.2f%n", activeUser.getBalance());
@@ -109,6 +103,7 @@ public class UserInterface {
 							input.nextLine();
 							String username = input.nextLine();
 							System.out.println(username);
+							
 							System.out.println("Enter the new password");
 							String pass = input.nextLine();
 							activeUser.changePassword(accManager.getUser(username), pass);
@@ -120,20 +115,38 @@ public class UserInterface {
 							activeUser = null;
 							keepGoing = false;
 							break;
-					}
-				}}
-			break;	
+				}
+			}
+		}
+			break;
+			
 		case 3:
 			done = true;
 			System.out.println("Thank you for using the system.");
 			break;
 		default:
-				System.out.println("Invalid input. please enter a number (1-3)");
+			System.out.println("Invalid input. please enter a number (1-3)");
 			break;
-		
 		}
-
-		}
+	}
 		input.close();
-    }
+	}
+	
+	private int getValidInput(int min, int max) {
+		int option = -1;
+			while (true) {
+	            try {
+	                option = input.nextInt();
+	                if (option >= min && option <= max) {
+	                    break;
+	                } else {
+	                    System.out.println("Please enter a number between " + min + " and " + max);
+	                }
+	            } catch (InputMismatchException e) {
+	                System.out.println("Invalid input. Please enter a number.");
+	                input.next(); // Clear the invalid input
+	            }
+	        }
+	        return option;
+	}
 }
