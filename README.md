@@ -1,2 +1,11 @@
 # MIST4600Project1
-Hank is a Hunk
+Text-based Java bank login menu.
+
+You can create accounts and interact with several pre-made accounts. The admin account can reset passwords, view transaction history, and list all users in the system. All accounts can deposit and withdraw money, transfer funds, and view the transaction history of their user.
+
+admin : password
+lhelm : drums
+rdanko : bass
+rrobertson : guitar
+rmanuel : piano
+gbrooks : organ
