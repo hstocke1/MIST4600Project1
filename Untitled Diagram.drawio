@@ -97,6 +97,9 @@
         <mxCell id="RVb5oqGzyK0K8IVMlo9C-37" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=1.01;entryY=0.333;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" source="RVb5oqGzyK0K8IVMlo9C-1" target="RVb5oqGzyK0K8IVMlo9C-20">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
+        <mxCell id="RVb5oqGzyK0K8IVMlo9C-38" value="BankLogin" style="shape=umlFrame;whiteSpace=wrap;html=1;pointerEvents=0;width=165;height=40;" vertex="1" parent="1">
+          <mxGeometry x="-325" y="10" width="1165" height="790" as="geometry" />
+        </mxCell>
       </root>
     </mxGraphModel>
   </diagram>
